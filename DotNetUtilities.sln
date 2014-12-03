@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSystemUtilities", "File
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsExtensions", "WindowsFormsExtensions\WindowsFormsExtensions.csproj", "{8A07A1D7-43C5-4122-A825-90E85DC22AE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathExtensions", "MathExtensions\MathExtensions.csproj", "{259AEB8D-E012-4F72-9391-D6BB12982CA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathExtensionsTests", "MathExtensionsTests\MathExtensionsTests.csproj", "{1CECA057-5A12-4A06-9199-3A3ADA385262}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{8A07A1D7-43C5-4122-A825-90E85DC22AE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A07A1D7-43C5-4122-A825-90E85DC22AE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A07A1D7-43C5-4122-A825-90E85DC22AE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{259AEB8D-E012-4F72-9391-D6BB12982CA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{259AEB8D-E012-4F72-9391-D6BB12982CA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{259AEB8D-E012-4F72-9391-D6BB12982CA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{259AEB8D-E012-4F72-9391-D6BB12982CA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CECA057-5A12-4A06-9199-3A3ADA385262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CECA057-5A12-4A06-9199-3A3ADA385262}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CECA057-5A12-4A06-9199-3A3ADA385262}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CECA057-5A12-4A06-9199-3A3ADA385262}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

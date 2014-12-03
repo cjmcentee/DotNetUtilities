@@ -289,3 +289,5 @@ FakesAssemblies/
 [Bb]in/
 # The object directory is at the project level, one folder in
 */[Oo]bj/
+# Logging results for the tests
+TestResults/
