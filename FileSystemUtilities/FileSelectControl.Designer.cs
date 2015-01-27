@@ -53,6 +53,7 @@
             // selectFilesButton
             // 
             this.selectFilesButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.selectFilesButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.selectFilesButton.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.selectFilesButton.Location = new System.Drawing.Point(3, 3);
             this.selectFilesButton.Name = "selectFilesButton";

@@ -17,5 +17,12 @@ namespace MathExtensions
             else
                 return value;
         }
+
+        public static double Average(params double[] values) {
+            double average = 0;
+            foreach (double value in values)
+                average += value;
+            return average / values.Length;
+        }
     }
 }

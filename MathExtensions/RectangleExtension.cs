@@ -179,6 +179,13 @@ namespace MathExtensions
                 rectangle.Y + rectangle.Height / 2);
         }
 
+        public static PointF CenterF(this Rectangle rectangle)
+        {
+            return new PointF(
+                rectangle.X + (float)rectangle.Width / 2,
+                rectangle.Y + (float)rectangle.Height / 2);
+        }
+
         public static Rectangle Copy(this Rectangle rectangle)
         {
             // value type semantics means the copy was made at the function call

@@ -11,12 +11,13 @@ using System.IO;
 
 namespace FileSystemUtilities
 {
+    public delegate void FileSelectedEventHandler(object sender, EventArgs e);
+
     public partial class FileSelectControl : UserControl
     {
         ////////////////////////////////////////////////
         //        Initialize Public Properties
         ////////////////////////////////////////////////
-
         // Dialog filter, default: All Files
         public String SelectFilesDialogFilter {
             get {   return selectFilesDialog.Filter; }
@@ -47,6 +48,13 @@ namespace FileSystemUtilities
         public List<FileInfo> SelectedFiles {
             get {   return new List<FileInfo>(selectedFiles); }
         }
+
+
+        ////////////////////////////////////////////////
+        //              Public Events
+        ////////////////////////////////////////////////
+        public event FileSelectedEventHandler FileSelected;
+
 
         ////////////////////////////////////////////////
         //              Public Interface
@@ -88,6 +96,9 @@ namespace FileSystemUtilities
                 var selectedFileNames = from fullFileName in selectFilesDialog.FileNames
                                       select Path.GetFileName(fullFileName);
                 selectedFilesLabel.Text = "(" + selectedFileNames.Count() + " files selected):" + String.Join("; ", selectedFileNames);
+
+                if (FileSelected != null)
+                    FileSelected(this, e);
             }
         }
     }

@@ -52,6 +52,7 @@
             // selectFolderButton
             // 
             this.selectFolderButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.selectFolderButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.selectFolderButton.Font = new System.Drawing.Font("Calibri", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.selectFolderButton.Location = new System.Drawing.Point(3, 3);
             this.selectFolderButton.Name = "selectFolderButton";
