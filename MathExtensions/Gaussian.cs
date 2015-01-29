@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 namespace MathExtensions
 {
     [Serializable]
-    public class GaussianDistribution
+    public class Gaussian
     {
         private List<double> points;
 
         public double Mean { get; private set; }
         public double StandardDeviation { get; private set; }
 
-        public GaussianDistribution()
+        public Gaussian()
             : this(new List<double>()) { }
 
-        public GaussianDistribution(IEnumerable<double> points) {
+        public Gaussian(IEnumerable<double> points) {
             this.points = points.ToList();
             foreach (double point in points)
                 AddPointToModel(point);

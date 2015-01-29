@@ -46,9 +46,10 @@
   <ItemGroup>
     <Compile Include="Direction.cs" />
     <Compile Include="DirectionExtension.cs" />
-    <Compile Include="GaussianDistribution.cs" />
+    <Compile Include="Gaussian.cs" />
     <Compile Include="MathD.cs" />
     <Compile Include="MathI.cs" />
+    <Compile Include="MultivariateGaussian.cs" />
     <Compile Include="PointExtension.cs" />
     <Compile Include="PointFExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
