@@ -32,39 +32,39 @@ namespace MathExtensions
             Covariance = new DenseMatrix(dimensions, dimensions);
         }
 
-        public MultivariateGaussian(IEnumerable<Vector<double>> points) {
-            this.dimensions = points.First().Count;
+        public MultivariateGaussian(IEnumerable<double[]> points) {
+            this.dimensions = points.First().Count();
             AddPointsToModel(points);
         }
 
-        public double CalculateDensityOf(Vector<double> value) {
-            if (value.Count != dimensions)
-                throw new IncorrectDimensionsException(value.Count, this.dimensions);
+        public double CalculateDensityOf(double[] value) {
+            if (value.Count() != dimensions)
+                throw new IncorrectDimensionsException(value.Count(), this.dimensions);
 
             var meanAsMatrix = new DenseMatrix(1, dimensions, Mean.ToArray());
             var columnCovariance = new DenseMatrix(1, 1, new double[]{1});
             var distribution = new MatrixNormal(meanAsMatrix, Covariance, columnCovariance);
 
-            var valueAsMatrix = new DenseMatrix(1, dimensions, value.ToArray());
+            var valueAsMatrix = new DenseMatrix(1, dimensions, value);
             double density = distribution.Density(valueAsMatrix);
             
             return density;
         }
 
-        public void AddPointToModel(Vector<double> point) {
-            if (point.Count != dimensions)
-                throw new IncorrectDimensionsException(point.Count, this.dimensions);
+        public void AddPointToModel(double[] point) {
+            if (point.Count() != dimensions)
+                throw new IncorrectDimensionsException(point.Count(), this.dimensions);
 
-            points.Add(point);
+            points.Add(new DenseVector(point));
             RecalculateMean();
             RecalculateCovariance();
         }
 
-        public void AddPointsToModel(IEnumerable<Vector<double>> points) {
+        public void AddPointsToModel(IEnumerable<double[]> points) {
             // Verify the vectors are all the same length
             int? dimensions = null;
-            foreach (Vector<double> point in points) {
-                int currentDimension = point.Count;
+            foreach (double[] point in points) {
+                int currentDimension = point.Count();
                 
                 if ( ! dimensions.HasValue)
                     dimensions = currentDimension;
@@ -75,7 +75,8 @@ namespace MathExtensions
             }
 
             // Update the model
-            this.points.AddRange(points);
+            var vectorPoints = points.Select(p => new DenseVector(p));
+            this.points.AddRange(vectorPoints);
             RecalculateMean();
             RecalculateCovariance();
         }
@@ -100,7 +101,7 @@ namespace MathExtensions
             return average;
         }
 
-        public static double CalculateCovariance(double ithMean, int ithDimension, double jthMean, int jthDimension, IEnumerable<Vector<double>> points) {
+        private static double CalculateCovariance(double ithMean, int ithDimension, double jthMean, int jthDimension, IEnumerable<Vector<double>> points) {
             var ithDifferenceFromMean = points.Select(p => p[ithDimension] - ithMean);
             double ithDifferenceSum = ithDifferenceFromMean.Sum();
 
