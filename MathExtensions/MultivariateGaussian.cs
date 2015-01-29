@@ -18,44 +18,48 @@ namespace MathExtensions
     [Serializable]
     public class MultivariateGaussian
     {
-        private readonly int dimensions;
-        private List<Vector<double>> points;
+        public readonly int Dimensions;
+        private List<double[]> points;
 
-        public Vector<double> Mean { get; private set; }
-        public Matrix<double> Covariance { get; private set; }
+        public double[] Mean       { get; private set; } // dimensions            in length, vector
+        public double[] Covariance { get; private set; } // dimensions*dimensions in length, matrix
 
         public MultivariateGaussian(int dimensions) {
-            this.dimensions = dimensions;
-            this.points = new List<Vector<double>>();
+            this.Dimensions = dimensions;
+            this.points = new List<double[]>();
 
-            Mean = new DenseVector(dimensions);
-            Covariance = new DenseMatrix(dimensions, dimensions);
+            Mean = new double[dimensions];
+            Covariance = new double[dimensions*dimensions];
         }
 
         public MultivariateGaussian(IEnumerable<double[]> points) {
-            this.dimensions = points.First().Count();
+            this.Dimensions = points.First().Count();
             AddPointsToModel(points);
         }
 
         public double CalculateDensityOf(double[] value) {
-            if (value.Count() != dimensions)
-                throw new IncorrectDimensionsException(value.Count(), this.dimensions);
+            if (value.Count() != Dimensions)
+                throw new IncorrectDimensionsException(value.Count(), this.Dimensions);
 
-            var meanAsMatrix = new DenseMatrix(1, dimensions, Mean.ToArray());
-            var columnCovariance = new DenseMatrix(1, 1, new double[]{1});
-            var distribution = new MatrixNormal(meanAsMatrix, Covariance, columnCovariance);
-
-            var valueAsMatrix = new DenseMatrix(1, dimensions, value);
-            double density = distribution.Density(valueAsMatrix);
+            var valueVector = new DenseVector(value);
+            var meanVector = new DenseVector(Mean.ToArray());
+            var covarianceMatrix = new DenseMatrix(Dimensions, Dimensions, Covariance);
             
-            return density;
+            double covarianceDeterminant = covarianceMatrix.Determinant();
+            double dofFactor = 1 / Math.Sqrt(Math.Pow(2*Math.PI, Dimensions) * covarianceDeterminant);
+
+            var meanDifference = valueVector.Subtract(meanVector);
+            var inverseCovarianceMatrix = covarianceMatrix.Inverse();
+            var meanDistanceMeasure = -0.5 * inverseCovarianceMatrix.Multiply(meanDifference).DotProduct(meanDifference);
+
+            return dofFactor * Math.Exp(meanDistanceMeasure);
         }
 
         public void AddPointToModel(double[] point) {
-            if (point.Count() != dimensions)
-                throw new IncorrectDimensionsException(point.Count(), this.dimensions);
+            if (point.Count() != Dimensions)
+                throw new IncorrectDimensionsException(point.Count(), this.Dimensions);
 
-            points.Add(new DenseVector(point));
+            points.Add(point);
             RecalculateMean();
             RecalculateCovariance();
         }
@@ -75,8 +79,7 @@ namespace MathExtensions
             }
 
             // Update the model
-            var vectorPoints = points.Select(p => new DenseVector(p));
-            this.points.AddRange(vectorPoints);
+            this.points.AddRange(points);
             RecalculateMean();
             RecalculateCovariance();
         }
@@ -86,22 +89,22 @@ namespace MathExtensions
         }
 
         private void RecalculateCovariance() {
-            for (int i = 0; i < dimensions; i++) {
+            for (int i = 0; i < Dimensions; i++) {
                 double ithMean = DimensionAverage(i, points);
-                for (int j = 0; j < dimensions; j++) {
+                for (int j = 0; j < Dimensions; j++) {
                     double jthMean = DimensionAverage(j, points);
-                    Covariance[i, j] = CalculateCovariance(ithMean, i, jthMean, j, this.points);
+                    Covariance[i * Dimensions + j] = CalculateCovariance(ithMean, i, jthMean, j, this.points);
                 }
             }
         }
 
-        private static double DimensionAverage(int dimension, IEnumerable<Vector<double>> points) {
+        private static double DimensionAverage(int dimension, IEnumerable<double[]> points) {
             double sum = points.Aggregate(0.0, (acc, p) => acc + p[dimension]);
             double average = sum / points.Count();
             return average;
         }
 
-        private static double CalculateCovariance(double ithMean, int ithDimension, double jthMean, int jthDimension, IEnumerable<Vector<double>> points) {
+        private static double CalculateCovariance(double ithMean, int ithDimension, double jthMean, int jthDimension, IEnumerable<double[]> points) {
             var ithDifferenceFromMean = points.Select(p => p[ithDimension] - ithMean);
             double ithDifferenceSum = ithDifferenceFromMean.Sum();
 
@@ -112,9 +115,18 @@ namespace MathExtensions
             return ijCovariance;
         }
 
-        private static Vector<double> AveragePoints(IEnumerable<Vector<double>> points) {
-            Vector<double> sum = points.Aggregate((acc, p) => acc.Add(p));
-            Vector<double> average = sum.Divide(points.Count());
+        private static double[] AveragePoints(IEnumerable<double[]> points) {
+            int dimensions = points.First().Count();
+            
+            // Do the average operation
+            double[] average = new double[dimensions];
+            // Sum the vectors up
+            foreach (double[] point in points)
+                for (int j = 0; j < average.Count(); j++)
+                    average[j] += point[j];
+            // Divide each entry of the vector sum by the length for the average
+            for (int i = 0; i < average.Count(); i++)
+                average[i] /= points.Count();
             return average;
         }
     }
