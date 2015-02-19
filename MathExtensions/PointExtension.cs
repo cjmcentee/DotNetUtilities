@@ -24,5 +24,13 @@ namespace MathExtensions
         {
             return new Direction(point1.X - point2.X, point1.Y - point2.Y);
         }
+
+        public static Point OffsetBy(this Point point, Point offset) {
+            return new Point(point.X + offset.X, point.Y + offset.Y);
+        }
+
+        public static Point MultiplyBy(this Point point, float scalar) {
+            return new Point((int)(point.X * scalar), (int)(point.Y * scalar));
+        }
     }
 }

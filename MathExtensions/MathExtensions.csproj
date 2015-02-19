@@ -46,14 +46,19 @@
   <ItemGroup>
     <Compile Include="Direction.cs" />
     <Compile Include="DirectionExtension.cs" />
+    <Compile Include="GridLocation.cs" />
+    <Compile Include="MathF.cs" />
+    <Compile Include="RectangleFExtensions.cs" />
+    <Compile Include="RotatedRectangle.cs" />
     <Compile Include="Gaussian.cs" />
     <Compile Include="MathD.cs" />
     <Compile Include="MathI.cs" />
-    <Compile Include="MultivariateGaussian.cs" />
     <Compile Include="PointExtension.cs" />
     <Compile Include="PointFExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RectangleExtension.cs" />
+    <Compile Include="RectangleExtensions.cs" />
+    <Compile Include="SizeExtensions.cs" />
+    <Compile Include="SizeFExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

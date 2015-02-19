@@ -1,16 +1,11 @@
-﻿using MathExtensions;
+﻿using System.Drawing;
+using MathExtensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MathExtensionTests
 {
     [TestClass]
-    public class TestRectangleExtension
+    public class TestRectangleExtensions
     {
         [TestMethod]
         public void SurroundPoints_AllPointsContainedInSmallestPossibleRectangle()
@@ -20,7 +15,7 @@ namespace MathExtensionTests
                 new Point(1, 1),
                 new Point(0, 1) };
 
-            Rectangle oneByOneSquare = RectangleExtension.SurroundPoints(points);
+            Rectangle oneByOneSquare = RectangleExtensions.SurroundPoints(points);
             Assert.AreEqual(oneByOneSquare.Left, 0);
             Assert.AreEqual(oneByOneSquare.Right, 1);
 
@@ -33,7 +28,7 @@ namespace MathExtensionTests
         {
             Point[] points = new Point[] { };
 
-            Rectangle originPointRectangle = RectangleExtension.SurroundPoints(points);
+            Rectangle originPointRectangle = RectangleExtensions.SurroundPoints(points);
             Assert.AreEqual(originPointRectangle.Left, 0);
             Assert.AreEqual(originPointRectangle.Right, 0);
 
@@ -120,7 +115,7 @@ namespace MathExtensionTests
             Rectangle rectangle = new Rectangle(1, 1, 1, 2);
 
             // NEW: top left at (0, 0), bottom right at (2, 3)
-            Rectangle newLeftRectangle = rectangle.SetLeft(-1);
+            Rectangle newLeftRectangle = rectangle.SetLeftSide(-1);
 
             Assert.AreEqual(newLeftRectangle.Left, -1);
             Assert.AreEqual(newLeftRectangle.Right, 2);
@@ -136,7 +131,7 @@ namespace MathExtensionTests
             Rectangle rectangle = new Rectangle(1, 1, 1, 2);
 
             // NEW: top left at (0, 0), bottom right at (2, 3)
-            Rectangle newRightRectangle = rectangle.SetRight(4);
+            Rectangle newRightRectangle = rectangle.SetRightSide(4);
 
             Assert.AreEqual(newRightRectangle.Left, 1);
             Assert.AreEqual(newRightRectangle.Right, 4);
@@ -152,7 +147,7 @@ namespace MathExtensionTests
             Rectangle rectangle = new Rectangle(1, 1, 1, 2);
 
             // NEW: top left at (0, 0), bottom right at (2, 3)
-            Rectangle newTopRectangle = rectangle.SetTop(-1);
+            Rectangle newTopRectangle = rectangle.SetTopSide(-1);
 
             Assert.AreEqual(newTopRectangle.Left, 1);
             Assert.AreEqual(newTopRectangle.Right, 2);
@@ -168,7 +163,7 @@ namespace MathExtensionTests
             Rectangle rectangle = new Rectangle(1, 1, 1, 2);
 
             // NEW: top left at (0, 0), bottom right at (2, 3)
-            Rectangle newBottomRectangle = rectangle.SetBottom(6);
+            Rectangle newBottomRectangle = rectangle.SetBottomSide(6);
 
             Assert.AreEqual(newBottomRectangle.Left, 1);
             Assert.AreEqual(newBottomRectangle.Right, 2);

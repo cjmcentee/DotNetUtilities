@@ -19,7 +19,6 @@ namespace MathExtensions
             : this(new List<double>()) { }
 
         public Gaussian(IEnumerable<double> points) {
-            this.points = points.ToList();
             foreach (double point in points)
                 AddPointToModel(point);
         }

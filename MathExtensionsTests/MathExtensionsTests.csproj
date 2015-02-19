@@ -59,7 +59,7 @@
     <Compile Include="TestDirectionExtension.cs" />
     <Compile Include="TestMathD.cs" />
     <Compile Include="TestPointExtension.cs" />
-    <Compile Include="TestRectangleExtension.cs" />
+    <Compile Include="TestRectangleExtensions.cs" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

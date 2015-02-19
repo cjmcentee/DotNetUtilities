@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MathExtensions
 {
-    public static class RectangleExtension
+    public static class RectangleExtensions
     {
+        public static Rectangle NewByCenterSize(Point center, Size size) {
+            Size extents = size.Divide(2);
+            Point topLeft = center - extents;
+            return new Rectangle(topLeft, size);
+        }
+
         public static bool ClosedContains(this Rectangle rectangle, int x, int y)
         {
             return x <= rectangle.Right
@@ -93,8 +96,13 @@ namespace MathExtensions
             }
         }
 
+        public static Rectangle IntersectWith(this Rectangle rect1, Rectangle rect) {
+            rect.Intersect(rect1);
+            return rect;
+        }
 
-        public static Rectangle SetLeft(this Rectangle rectangle, int newLeft)
+
+        public static Rectangle SetLeftSide(this Rectangle rectangle, int newLeft)
         {
             int newWidth = rectangle.Right - newLeft;
             
@@ -104,7 +112,7 @@ namespace MathExtensions
             return rectangle;
         }
 
-        public static Rectangle SetRight(this Rectangle rectangle, int newRight)
+        public static Rectangle SetRightSide(this Rectangle rectangle, int newRight)
         {
             int newWidth = newRight - rectangle.Left;
 
@@ -113,7 +121,7 @@ namespace MathExtensions
             return rectangle;
         }
 
-        public static Rectangle SetTop(this Rectangle rectangle, int newTop)
+        public static Rectangle SetTopSide(this Rectangle rectangle, int newTop)
         {
             int newHeight = rectangle.Bottom - newTop;
 
@@ -123,7 +131,7 @@ namespace MathExtensions
             return rectangle;
         }
 
-        public static Rectangle SetBottom(this Rectangle rectangle, int newBottom)
+        public static Rectangle SetBottomSide(this Rectangle rectangle, int newBottom)
         {
             int newHeight = newBottom - rectangle.Top;
 
@@ -132,24 +140,24 @@ namespace MathExtensions
             return rectangle;
         }
 
-        public static Rectangle MoveLeft(this Rectangle rectangle, int moveDistance)
+        public static Rectangle MoveLeftSide(this Rectangle rectangle, int moveDistance)
         {
-            return rectangle.SetLeft(rectangle.Left + moveDistance);
+            return rectangle.SetLeftSide(rectangle.Left + moveDistance);
         }
 
-        public static Rectangle MoveRight(this Rectangle rectangle, int moveDistance)
+        public static Rectangle MoveRightSide(this Rectangle rectangle, int moveDistance)
         {
-            return rectangle.SetRight(rectangle.Right + moveDistance);
+            return rectangle.SetRightSide(rectangle.Right + moveDistance);
         }
 
-        public static Rectangle MoveTop(this Rectangle rectangle, int moveDistance)
+        public static Rectangle MoveTopSide(this Rectangle rectangle, int moveDistance)
         {
-            return rectangle.SetTop(rectangle.Top + moveDistance);
+            return rectangle.SetTopSide(rectangle.Top + moveDistance);
         }
 
-        public static Rectangle MoveBottom(this Rectangle rectangle, int moveDistance)
+        public static Rectangle MoveBottomSide(this Rectangle rectangle, int moveDistance)
         {
-            return rectangle.SetBottom(rectangle.Bottom + moveDistance);
+            return rectangle.SetBottomSide(rectangle.Bottom + moveDistance);
         }
 
         public static Point TopLeft(this Rectangle rectangle)
@@ -172,6 +180,12 @@ namespace MathExtensions
             return new Point(rectangle.Right, rectangle.Bottom);
         }
 
+        public static Rectangle OffsetBy(this Rectangle rectangle, Point offset) {
+            return new Rectangle(
+                new Point(rectangle.X + offset.X, rectangle.Y + offset.Y),
+                rectangle.Size);
+        }
+
         public static Point Center(this Rectangle rectangle)
         {
             return new Point(
@@ -190,6 +204,38 @@ namespace MathExtensions
         {
             // value type semantics means the copy was made at the function call
             return rectangle;
+        }
+
+        public static RectangleF SelectSubRectangleF(this Rectangle rectangle, int numberRows, int numberColumns, int row, int column) {
+            float subRectWidth  = (float) rectangle.Width / numberColumns;
+            float subRectHeight = (float) rectangle.Height / numberRows;
+
+            PointF subRectTopLeft = new PointF(
+                rectangle.TopLeft().X + column * subRectWidth,
+                rectangle.TopLeft().Y +    row * subRectHeight
+            );
+            SizeF subRectSize = new SizeF(subRectWidth, subRectHeight);
+            return new RectangleF(subRectTopLeft, subRectSize);
+        }
+
+        public static RectangleF SelectSubRectangleF(this Rectangle rectangle, GridLocation gridLoc) {
+            return rectangle.SelectSubRectangleF(gridLoc.NumberRows, gridLoc.NumberColumns, gridLoc.CurrentRow, gridLoc.CurrentColumn);
+        }
+
+        public static Rectangle SelectSubRectangle(this Rectangle rectangle, int numberRows, int numberColumns, int row, int column) {
+            int subRectWidth  = rectangle.Width / numberColumns;
+            int subRectHeight = rectangle.Height / numberRows;
+
+            Point subRectTopLeft = new Point(
+                rectangle.TopLeft().X + column * subRectWidth,
+                rectangle.TopLeft().Y +    row * subRectHeight
+            );
+            Size subRectSize = new Size(subRectWidth, subRectHeight);
+            return new Rectangle(subRectTopLeft, subRectSize);
+        }
+
+        public static Rectangle SelectSubRectangle(this Rectangle rectangle, GridLocation gridLoc) {
+            return rectangle.SelectSubRectangle(gridLoc.NumberRows, gridLoc.NumberColumns, gridLoc.CurrentRow, gridLoc.CurrentColumn);
         }
     }
 }
