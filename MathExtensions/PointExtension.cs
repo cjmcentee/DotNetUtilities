@@ -20,9 +20,9 @@ namespace MathExtensions
             return new Point(x_range, y_range);
         }
 
-        public static Direction RelativeTo(this Point point1, Point point2)
+        public static Point RelativeTo(this Point point1, Point point2)
         {
-            return new Direction(point1.X - point2.X, point1.Y - point2.Y);
+            return new Point(point1.X - point2.X, point1.Y - point2.Y);
         }
 
         public static Point OffsetBy(this Point point, Point offset) {

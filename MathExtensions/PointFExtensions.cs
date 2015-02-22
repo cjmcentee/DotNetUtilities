@@ -5,6 +5,12 @@ namespace MathExtensions
 {
     public static class PointFExtensions
     {
+        public static PointF OffsetBy(this PointF self, PointF point) {
+            return new PointF(
+                self.X + point.X,
+                self.Y + point.Y);
+        }
+
         public static float DistanceFrom(this PointF point1, PointF point2) {
            return (float) Math.Sqrt(Math.Pow(point1.X - point2.X, 2) + Math.Pow(point1.Y - point2.Y, 2));
         }

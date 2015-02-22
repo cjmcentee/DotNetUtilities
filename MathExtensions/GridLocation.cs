@@ -2,7 +2,7 @@
 
 namespace MathExtensions
 {
-    public class GridLocation
+    public class  GridLocation
     {
         public readonly int NumberRows, NumberColumns, CurrentRow, CurrentColumn;
 
