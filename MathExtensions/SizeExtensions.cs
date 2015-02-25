@@ -19,6 +19,11 @@ namespace MathExtensions
             return product;
         }
 
+        public static Size Multiply(this Size s, float multiplicand) {
+            Size product = new Size((int)(s.Width * multiplicand), (int)(s.Height * multiplicand));
+            return product;
+        }
+
         public static float Length(this Size s) {
             float length = (float) Math.Sqrt(Math.Pow(s.Width, 2) + Math.Pow(s.Height, 2));
             return length;

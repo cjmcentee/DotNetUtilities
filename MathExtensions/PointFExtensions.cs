@@ -19,6 +19,10 @@ namespace MathExtensions
             return new PointF(point1.X - point2.X, point1.Y - point2.Y);
         }
 
+        public static SizeF SizeFrom(this PointF point1, PointF point2) {
+            return new SizeF(point1.X - point2.X, point1.Y - point2.Y);
+        }
+
         public static float Length(this PointF point) {
             return point.DistanceFrom(new PointF(0, 0));
         }

@@ -7,6 +7,15 @@ namespace MathExtensions
 {
     public static class SizeFExtensions
     {
+        public static SizeF Normalized(this SizeF self) {
+            float length = self.Length();
+            return new SizeF(self.Width/length, self.Height/length);
+        }
+
+        public static float Slope(this SizeF self) {
+            return self.Height / self.Width;
+        }
+
         public static SizeF Divide(this SizeF s, float dividend) {
             SizeF quotient = new SizeF(s.Width/dividend, s.Height/dividend);
             return quotient;

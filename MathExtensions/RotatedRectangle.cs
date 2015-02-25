@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using StandardLibraryExtensions;
 
 namespace MathExtensions
 {
@@ -15,6 +17,8 @@ namespace MathExtensions
         public SizeF VerticalSize   { get { return RotateTransform(new SizeF(0, LocalHeight), AngleRadians); } }
         public SizeF HorizontalSize { get { return RotateTransform(new SizeF(LocalWidth, 0),  AngleRadians); } }
 
+        public Rectangle BoundingRectangle { get { return RectangleFExtensions.SurroundPoints(Corners).ToRectangle();} }
+
         public readonly PointF TopLeft;
         /// Note: Does not generate the top right point correctly unless set by the top right point constructor
         /// I don't know why, but since right now I'm only using the top right point constructor, this will have to do
@@ -23,6 +27,7 @@ namespace MathExtensions
         public PointF TopRight      { get { return topRight.HasValue ? topRight.Value : TopLeft + RotateTransform(HorizontalSize, AngleRadians); } }
         public PointF BottomRight   { get { return TopLeft + RotateTransform(LocalSize,      AngleRadians); } }
         public PointF BottomLeft    { get { return TopLeft + RotateTransform(VerticalSize,   AngleRadians); } }
+        public List<PointF> Corners { get { return ListExtensions.New(TopLeft, BottomLeft, BottomRight, TopRight); } } 
 
         public readonly double AngleRadians;
         public double AngleDegrees  { get { return AngleRadians * 180 / Math.PI; } }

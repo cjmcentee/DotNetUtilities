@@ -47,6 +47,7 @@
     <Compile Include="Direction.cs" />
     <Compile Include="DirectionExtension.cs" />
     <Compile Include="GridLocation.cs" />
+    <Compile Include="Line.cs" />
     <Compile Include="MathF.cs" />
     <Compile Include="RectangleFExtensions.cs" />
     <Compile Include="RotatedRectangle.cs" />
@@ -62,6 +63,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StandardLibraryExtensions\StandardLibraryExtensions.csproj">
+      <Project>{6491d5fb-e8db-4ed1-8228-62d5dcad33a7}</Project>
+      <Name>StandardLibraryExtensions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

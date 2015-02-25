@@ -1,24 +1,24 @@
-﻿using MathNet.Numerics.Distributions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MathNet.Numerics.Distributions;
 
 namespace MathExtensions
 {
     [Serializable]
     public class Gaussian
     {
-        private List<double> points;
+        public List<double> points;
 
-        public double Mean { get; private set; }
-        public double StandardDeviation { get; private set; }
+        public double Mean { get; set; }
+        public double StandardDeviation { get; set; }
 
-        public Gaussian()
-            : this(new List<double>()) { }
+        public Gaussian() {
+            points = new List<double>();
+        }
 
         public Gaussian(IEnumerable<double> points) {
+            points = new List<double>(points.Count());
             foreach (double point in points)
                 AddPointToModel(point);
         }

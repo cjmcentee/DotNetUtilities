@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MathExtensions
 {
     public static class PointExtension
     {
-        public static Point MapPoint(this Point point, Rectangle domain, Rectangle range)
+public static Point MapPoint(this Point self, Rectangle domain, Rectangle range)
         {
-            double x_scaled = (double) (point.X - domain.Left) / (double)domain.Width;
-            double y_scaled = (double) (point.Y - domain.Top) / (double)domain.Height;
+            double x_scaled = (double) (self.X - domain.Left) / domain.Width;
+            double y_scaled = (double) (self.Y - domain.Top) / domain.Height;
 
             int x_range = (int) Math.Round(x_scaled*range.Width) + range.Left;
             int y_range = (int) Math.Round(y_scaled*range.Height) + range.Top;
@@ -20,17 +16,21 @@ namespace MathExtensions
             return new Point(x_range, y_range);
         }
 
-        public static Point RelativeTo(this Point point1, Point point2)
+        public static Point RelativeTo(this Point self, Point point)
         {
-            return new Point(point1.X - point2.X, point1.Y - point2.Y);
+            return new Point(self.X - point.X, self.Y - point.Y);
         }
 
-        public static Point OffsetBy(this Point point, Point offset) {
-            return new Point(point.X + offset.X, point.Y + offset.Y);
+        public static Point OffsetBy(this Point self, Point offset) {
+            return new Point(self.X + offset.X, self.Y + offset.Y);
         }
 
-        public static Point MultiplyBy(this Point point, float scalar) {
-            return new Point((int)(point.X * scalar), (int)(point.Y * scalar));
+        public static Point MultiplyBy(this Point self, float scalar) {
+            return new Point((int)(self.X * scalar), (int)(self.Y * scalar));
+        }
+
+        public static Point Negate(this Point point) {
+            return new Point(-point.X, -point.Y);
         }
     }
 }
