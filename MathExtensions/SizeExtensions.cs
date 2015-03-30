@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +10,15 @@ namespace MathExtensions
 {
     public static class SizeExtensions
     {
+        public static Size ExtendBy(this Size self, int extensionAmount) {
+            return self.Add(extensionAmount);
+        }
+
+        public static Size Add(this Size self, int addend) {
+            Size sum = new Size(self.Width + addend, self.Height + addend);
+            return sum;
+        }
+
         public static Size Divide(this Size s, int dividend) {
             Size quotient = new Size(s.Width/dividend, s.Height/dividend);
             return quotient;

@@ -6,6 +6,8 @@ namespace MathExtensions
 {
     public static class RectangleExtensions
     {
+        // The rectangle structure is copied on method invocation, these extension methods cannot modify the source rectangle
+
         public static Rectangle NewByCenterSize(Point center, Size size) {
             Size extents = size.Divide(2);
             Point topLeft = center - extents;
@@ -56,44 +58,39 @@ namespace MathExtensions
             return containingRectangle;
         }
 
-        public static Rectangle InflateToContain(this Rectangle rectangle, Point point)
+        public static Rectangle InflateToContain(this Rectangle self, params Point[] points)
         {
-            if (point.X < rectangle.Left) {
-                rectangle.Width = rectangle.Right - point.X;
-                rectangle.X = point.X;
-            }
-            else if (point.X > rectangle.Right)
-                rectangle.Width = rectangle.Width + point.X - rectangle.Right;
+            foreach (Point point in points) {
 
-            if (point.Y < rectangle.Top) {
-                rectangle.Height = rectangle.Bottom - point.Y;
-                rectangle.Y = point.Y;
-            }
-            else if (point.Y > rectangle.Bottom)
-                rectangle.Height = rectangle.Height + point.Y - rectangle.Bottom;
+                if (point.X < self.Left) {
+                    self.Width = self.Right - point.X;
+                    self.X = point.X;
+                }
+                else if (point.X > self.Right)
+                    self.Width = self.Width + point.X - self.Right;
 
-            return rectangle;
+                if (point.Y < self.Top) {
+                    self.Height = self.Bottom - point.Y;
+                    self.Y = point.Y;
+                }
+                else if (point.Y > self.Bottom)
+                    self.Height = self.Height + point.Y - self.Bottom;
+            }
+
+            return self;
         }
 
-        public static Rectangle InflateToContain(this Rectangle rectangle, Rectangle containedRectangle)
-        {
-            if (rectangle.ClosedContains(containedRectangle))
-                return rectangle;
+        public static Rectangle InflateToContain(this Rectangle self, Rectangle containedRectangle) {
+            self = self.InflateToContain(containedRectangle.TopLeft(), containedRectangle.TopRight(), containedRectangle.BottomRight(), containedRectangle.BottomLeft());
+            return self;
+        }
 
-            else {
-                // The rectangle that contains each corner of another rectangle, contains the whole of that other rectangle
-                Point topLeft = new Point(containedRectangle.Left, containedRectangle.Top);
-                Point topRight = new Point(containedRectangle.Right, containedRectangle.Top);
-                Point bottomRight = new Point(containedRectangle.Right, containedRectangle.Bottom);
-                Point bottomLeft = new Point(containedRectangle.Left, containedRectangle.Bottom);
-
-                rectangle = rectangle.InflateToContain(topLeft);
-                rectangle = rectangle.InflateToContain(topRight);
-                rectangle = rectangle.InflateToContain(bottomRight);
-                rectangle = rectangle.InflateToContain(bottomLeft);
-
-                return rectangle;
+        public static Rectangle InflateToContain(this Rectangle self, IEnumerable<Rectangle> containedRectangles) {
+            foreach (Rectangle containedRectangle in containedRectangles) {
+                self = self.InflateToContain(containedRectangle);
             }
+
+            return self;
         }
 
         public static Rectangle IntersectWith(this Rectangle rect1, Rectangle rect) {

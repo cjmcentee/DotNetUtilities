@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Direction.cs" />
-    <Compile Include="DirectionExtension.cs" />
+    <Compile Include="DirectionExtensions.cs" />
     <Compile Include="GridLocation.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="MathF.cs" />
@@ -54,7 +54,7 @@
     <Compile Include="Gaussian.cs" />
     <Compile Include="MathD.cs" />
     <Compile Include="MathI.cs" />
-    <Compile Include="PointExtension.cs" />
+    <Compile Include="PointExtensions.cs" />
     <Compile Include="PointFExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleExtensions.cs" />

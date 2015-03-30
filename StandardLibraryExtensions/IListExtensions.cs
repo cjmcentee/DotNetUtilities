@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StandardLibraryExtensions
 {
-    public static class IListExtension
+    public static class IListExtensions
     {
         public static T MinValue<T>(this IList<T> list, Func<T, double> valueFunction) {
             return list[list.IndexOfMin(valueFunction)];

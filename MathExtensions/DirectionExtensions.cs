@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MathExtensions
 {
-    public static class DirectionExtension
+    public static class DirectionExtensions
     {
         public static Direction MapPoint(this Direction point, Rectangle domain, Rectangle range)
         {

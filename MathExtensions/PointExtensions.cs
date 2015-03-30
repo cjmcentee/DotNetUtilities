@@ -3,9 +3,9 @@ using System.Drawing;
 
 namespace MathExtensions
 {
-    public static class PointExtension
+    public static class PointExtensions
     {
-public static Point MapPoint(this Point self, Rectangle domain, Rectangle range)
+        public static Point MapPoint(this Point self, Rectangle domain, Rectangle range)
         {
             double x_scaled = (double) (self.X - domain.Left) / domain.Width;
             double y_scaled = (double) (self.Y - domain.Top) / domain.Height;
@@ -21,8 +21,12 @@ public static Point MapPoint(this Point self, Rectangle domain, Rectangle range)
             return new Point(self.X - point.X, self.Y - point.Y);
         }
 
+        public static Point OffsetBy(this Point self, int offsetX, int offsetY) {
+            return new Point(self.X + offsetX, self.Y + offsetY);
+        }
+
         public static Point OffsetBy(this Point self, Point offset) {
-            return new Point(self.X + offset.X, self.Y + offset.Y);
+            return self.OffsetBy(offset.X, offset.Y);
         }
 
         public static Point MultiplyBy(this Point self, float scalar) {

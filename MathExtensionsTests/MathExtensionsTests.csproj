@@ -56,9 +56,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDirection.cs" />
-    <Compile Include="TestDirectionExtension.cs" />
+    <Compile Include="TestDirectionExtensions.cs" />
     <Compile Include="TestMathD.cs" />
-    <Compile Include="TestPointExtension.cs" />
+    <Compile Include="TestPointExtensions.cs" />
     <Compile Include="TestRectangleExtensions.cs" />
   </ItemGroup>
   <Choose>
